@@ -1,0 +1,17 @@
+/* Add these styles to your Authentication.css file */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Comic Neue', cursive, sans-serif;
+}
+
+/* Animation for extra fun */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.submit-btn:hover {
+  animation: bounce 0.5s;
+}
