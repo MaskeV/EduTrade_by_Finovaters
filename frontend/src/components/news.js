@@ -9,10 +9,10 @@ const News = () => {
   const [simplifiedArticles, setSimplifiedArticles] = useState({});
   const [explaining, setExplaining] = useState(null);
   const [readingLevel, setReadingLevel] = useState('medium'); // easy, medium, hard
-  const genAI = new GoogleGenerativeAI("AIzaSyCYgMBiCR8zSQNnwAwPDjCWJ-UjgmnlC5s");
+  const genAI = new GoogleGenerativeAI(process.env.PIXABAY_API_KEY);
   
   // Pixabay API key - replace with your own key
-  const PIXABAY_API_KEY = "#################";
+  const PIXABAY_API_KEY = "45815912-cee479e7272433c5901d0ea90";
   const PIXABAY_API_URL = "https://pixabay.com/api/";
 
   useEffect(() => {

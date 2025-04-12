@@ -1,218 +1,559 @@
 /* Profile Container */
 .profile-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .profile-title {
-    color: #2c3e50;
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-  
-  /* Profile Sections */
-  .profile-section {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    margin-bottom: 2rem;
-  }
-  
-  /* User Info Section */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile-title {
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Profile Sections */
+.profile-section {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* User Info Section */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.user-avatar {
+  font-size: 3.5rem;
+  width: 100px;
+  height: 100px;
+  background: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #3498db;
+}
+
+.user-details {
+  flex: 1;
+  min-width: 250px;
+}
+
+.user-details h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.user-details p {
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+.virtual-balance {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  min-width: 200px;
+  text-align: center;
+}
+
+.balance-amount {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #27ae60;
+  margin: 0.5rem 0;
+}
+
+.profit-loss {
+  font-weight: bold;
+}
+
+.profit-loss.positive {
+  color: #27ae60;
+}
+
+.profit-loss.negative {
+  color: #e74c3c;
+}
+
+/* Learning Progress Section */
+.progress-container {
+  margin-top: 1.5rem;
+}
+
+.progress-item {
+  margin-bottom: 1.5rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.progress-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #ecf0f1;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #3498db;
+  transition: width 0.5s ease;
+}
+
+.progress-fill.completed {
+  background: #27ae60;
+}
+
+.completion-badge {
+  background: #27ae60;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* Portfolio Section */
+.portfolio-summary {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.summary-card {
+  flex: 1;
+  min-width: 150px;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.summary-card h3 {
+  margin-top: 0;
+  color: #555;
+  font-size: 1rem;
+}
+
+.summary-card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0;
+}
+
+.summary-card.positive p {
+  color: #27ae60;
+}
+
+.summary-card.negative p {
+  color: #e74c3c;
+}
+
+/* Portfolio Table */
+.portfolio-table {
+  overflow-x: auto;
+}
+
+.portfolio-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.portfolio-table th,
+.portfolio-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.portfolio-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.portfolio-table tr:hover {
+  background: #f8f9fa;
+}
+
+.positive {
+  color: #27ae60;
+}
+
+.negative {
+  color: #e74c3c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .user-info {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    text-align: center;
   }
   
   .user-avatar {
-    font-size: 3.5rem;
-    width: 100px;
-    height: 100px;
-    background: #f8f9fa;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #3498db;
+    margin: 0 auto;
   }
   
-  .user-details {
-    flex: 1;
-    min-width: 250px;
-  }
-  
-  .user-details h2 {
-    margin-top: 0;
-    color: #2c3e50;
-  }
-  
-  .user-details p {
-    margin: 0.5rem 0;
-    color: #555;
-  }
-  
-  .virtual-balance {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
-    min-width: 200px;
-    text-align: center;
-  }
-  
-  .balance-amount {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #27ae60;
-    margin: 0.5rem 0;
-  }
-  
-  .profit-loss {
-    font-weight: bold;
-  }
-  
-  .profit-loss.positive {
-    color: #27ae60;
-  }
-  
-  .profit-loss.negative {
-    color: #e74c3c;
-  }
-  
-  /* Learning Progress Section */
-  .progress-container {
-    margin-top: 1.5rem;
-  }
-  
-  .progress-item {
-    margin-bottom: 1.5rem;
-  }
-  
-  .progress-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-  }
-  
-  .progress-header h3 {
-    margin: 0;
-    font-size: 1.1rem;
-  }
-  
-  .progress-bar {
-    height: 10px;
-    background: #ecf0f1;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  
-  .progress-fill {
-    height: 100%;
-    background: #3498db;
-    transition: width 0.5s ease;
-  }
-  
-  .progress-fill.completed {
-    background: #27ae60;
-  }
-  
-  .completion-badge {
-    background: #27ae60;
-    color: white;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    display: inline-block;
-    margin-top: 0.5rem;
-  }
-  
-  /* Portfolio Section */
   .portfolio-summary {
-    display: flex;
-    gap: 1.5rem;
-    margin: 1.5rem 0;
-    flex-wrap: wrap;
+    flex-direction: column;
   }
-  
-  .summary-card {
-    flex: 1;
-    min-width: 150px;
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
-    text-align: center;
-  }
-  
-  .summary-card h3 {
-    margin-top: 0;
-    color: #555;
-    font-size: 1rem;
-  }
-  
-  .summary-card p {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0.5rem 0 0;
-  }
-  
-  .summary-card.positive p {
-    color: #27ae60;
-  }
-  
-  .summary-card.negative p {
-    color: #e74c3c;
-  }
-  
-  /* Portfolio Table */
-  .portfolio-table {
-    overflow-x: auto;
-  }
-  
-  .portfolio-table table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .portfolio-table th,
-  .portfolio-table td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #ecf0f1;
-  }
-  
-  .portfolio-table th {
-    background: #f8f9fa;
-    font-weight: 600;
-  }
-  
-  .portfolio-table tr:hover {
-    background: #f8f9fa;
-  }
-  
-  .positive {
-    color: #27ae60;
-  }
-  
-  .negative {
-    color: #e74c3c;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .user-info {
-      flex-direction: column;
-      text-align: center;
-    }
-    
-    .user-avatar {
-      margin: 0 auto;
-    }
-    
-    .portfolio-summary {
-      flex-direction: column;
-    }
-  }
+}
+
+/* Add to your profile.css file */
+
+.leaderboard-snapshot {
+margin-top: 2rem;
+}
+
+.your-ranking {
+display: flex;
+align-items: center;
+background-color: #f5f5f5;
+padding: 1rem;
+border-radius: 8px;
+margin-bottom: 1.5rem;
+}
+
+.rank-badge {
+font-size: 2rem;
+font-weight: bold;
+color: #2e7d32;
+background-color: rgba(46, 125, 50, 0.1);
+border-radius: 50%;
+width: 64px;
+height: 64px;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-right: 1rem;
+}
+
+.rank-details h3 {
+margin: 0 0 0.5rem 0;
+}
+
+.rank-details p {
+margin: 0;
+color: #666;
+}
+
+.top-performers {
+margin-bottom: 1.5rem;
+}
+
+.performers-list {
+display: flex;
+flex-direction: column;
+gap: 0.5rem;
+}
+
+.performer-item {
+display: flex;
+align-items: center;
+padding: 0.75rem;
+background-color: white;
+border-radius: 6px;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.performer-rank {
+font-size: 1.25rem;
+margin-right: 1rem;
+width: 30px;
+text-align: center;
+}
+
+.performer-name {
+flex-grow: 1;
+font-weight: 500;
+}
+
+.performer-profit {
+margin-right: 1rem;
+font-weight: 500;
+color: #2e7d32;
+}
+
+.performer-percentage {
+color: #2e7d32;
+font-weight: 500;
+width: 70px;
+text-align: right;
+}
+
+.view-full-leaderboard {
+text-align: center;
+margin-top: 1rem;
+}
+
+.leaderboard-link {
+display: inline-block;
+background-color: #1976d2;
+color: white;
+padding: 0.6rem 1.2rem;
+border-radius: 4px;
+text-decoration: none;
+font-weight: 500;
+transition: background-color 0.2s;
+}
+
+.leaderboard-link:hover {
+background-color: #1565c0;
+}
+
+/* Leaderboard Toggle Button */
+.leaderboard-toggle-btn {
+background: linear-gradient(135deg, #4a6fa5, #3a5a8f);
+color: white;
+border: none;
+padding: 12px 24px;
+border-radius: 30px;
+font-weight: 600;
+font-size: 1.1rem;
+cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: 0 4px 15px rgba(74, 111, 165, 0.3);
+display: block;
+width: 100%;
+max-width: 250px;
+margin: 20px auto;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+.leaderboard-toggle-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(74, 111, 165, 0.4);
+background: linear-gradient(135deg, #3a5a8f, #2a4a7f);
+}
+
+.leaderboard-toggle-btn:active {
+transform: translateY(0);
+}
+
+/* Leaderboard Container */
+.leaderboard-container {
+background: #ffffff;
+border-radius: 12px;
+box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+padding: 25px;
+margin-top: 30px;
+border: 1px solid #e0e6ed;
+}
+
+/* Leaderboard Table */
+.leaderboard-table {
+width: 100%;
+border-collapse: separate;
+border-spacing: 0 10px;
+}
+
+.leaderboard-table th {
+background: #f8fafc;
+color: #4a5568;
+font-weight: 600;
+padding: 15px;
+text-align: left;
+border-bottom: 2px solid #e2e8f0;
+position: sticky;
+top: 0;
+}
+
+.leaderboard-table td {
+padding: 15px;
+background: #fff;
+border-bottom: 1px solid #edf2f7;
+}
+
+/* User Names - Improved Visibility */
+.user-name {
+color: #2d3748 !important; /* Dark color for better visibility */
+font-weight: 600;
+font-size: 1.05rem;
+}
+
+/* Rank Cells */
+.rank-cell {
+width: 70px;
+}
+
+.rank-badge {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 36px;
+height: 36px;
+border-radius: 50%;
+background: #f0f4f8;
+color: #4a5568;
+font-weight: 700;
+font-size: 1rem;
+}
+
+.top-1 .rank-badge {
+background: linear-gradient(135deg, #f6e05e, #f59e0b);
+color: white;
+}
+
+.top-2 .rank-badge {
+background: linear-gradient(135deg, #e2e8f0, #a0aec0);
+color: white;
+}
+
+.top-3 .rank-badge {
+background: linear-gradient(135deg, #f6ad55, #ed8936);
+color: white;
+}
+
+/* Value Cells */
+.profit-cell, 
+.investment-cell, 
+.percentage-cell {
+font-family: 'Roboto Mono', monospace;
+font-weight: 500;
+font-size: 1rem;
+}
+
+.positive {
+color: #38a169;
+}
+
+.negative {
+color: #e53e3e;
+}
+
+/* Period Selector */
+.period-selector {
+display: flex;
+gap: 10px;
+margin: 20px 0;
+justify-content: center;
+}
+
+.period-selector button {
+padding: 8px 16px;
+border-radius: 20px;
+border: 2px solid #e2e8f0;
+background: #f8fafc;
+color: #4a5568;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.2s ease;
+min-width: 100px;
+}
+
+.period-selector button:hover {
+background: #edf2f7;
+border-color: #cbd5e0;
+}
+
+.period-selector button.active {
+background: #4a6fa5;
+color: white;
+border-color: #4a6fa5;
+}
+
+/* Loading States */
+.leaderboard-loading {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 40px 0;
+min-height: 200px;
+}
+
+.spinner {
+width: 40px;
+height: 40px;
+border: 4px solid rgba(74, 111, 165, 0.1);
+border-radius: 50%;
+border-top-color: #4a6fa5;
+animation: spin 1s linear infinite;
+margin-bottom: 16px;
+}
+
+@keyframes spin {
+to { transform: rotate(360deg); }
+}
+
+/* Error Message */
+.error-message {
+color: #e53e3e;
+background-color: #fff5f5;
+padding: 15px;
+border-radius: 8px;
+border: 1px solid #fed7d7;
+margin: 20px 0;
+text-align: center;
+}
+
+/* Empty State */
+.no-data {
+text-align: center;
+padding: 40px 0;
+color: #a0aec0;
+font-size: 1rem;
+background: #f8fafc;
+border-radius: 8px;
+}
+
+/* Footer Note */
+.leaderboard-note {
+margin-top: 20px;
+font-size: 0.9rem;
+color: #718096;
+text-align: center;
+padding-top: 16px;
+border-top: 1px solid #e2e8f0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+.leaderboard-container {
+  padding: 15px;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+.user-name {
+  font-size: 0.95rem;
+}
+
+.period-selector {
+  flex-wrap: wrap;
+}
+
+.period-selector button {
+  min-width: 80px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.leaderboard-toggle-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+}

@@ -1,146 +1,294 @@
-import React, { useState } from 'react';
-import '../styles/profile.css'; // Create this CSS file
+import React, { useState, useEffect } from 'react';
+import { getAuth } from 'firebase/auth';
+import { doc, getDoc, collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
+import { db } from './firebase';
+import '../styles/profile.css';
 
 const Profile = () => {
-  // User data state
   const [user, setUser] = useState({
-    name: 'TraderPro',
-    email: 'trader@example.com',
-    joinDate: 'January 15, 2023',
-    avatar: '👨‍💼',
-    virtualBalance: 10000,
-    level: 'Intermediate',
+    name: 'Loading...',
+    email: 'Loading...',
+    joinDate: 'Loading...',
+    avatar: '👤',
+    level: 'Beginner',
   });
+  
+  const [loading, setLoading] = useState(true);
+  const [learningProgress, setLearningProgress] = useState([]);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  
+  // Leaderboard states
+  const [leaderboardData, setLeaderboardData] = useState([]);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(false);
+  const [leaderboardError, setLeaderboardError] = useState(null);
+  const [leaderboardPeriod, setLeaderboardPeriod] = useState('all');
 
-  // Learning progress data
-  const [learningProgress, setLearningProgress] = useState([
-    { id: 1, title: 'Market Basics', progress: 90, completed: true },
-    { id: 2, title: 'Technical Analysis', progress: 65, completed: false },
-    { id: 3, title: 'Risk Management', progress: 40, completed: false },
-    { id: 4, title: 'Advanced Strategies', progress: 20, completed: false },
-  ]);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+        
+        if (currentUser) {
+          const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+          
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            setUser({
+              name: userData.displayName || currentUser.displayName || 'Trader',
+              email: currentUser.email,
+              joinDate: new Date(userData.createdAt?.toDate()).toLocaleDateString() || 'N/A',
+              avatar: userData.avatar || '👤',
+              level: userData.level || 'Beginner',
+            });
+            
+            if (userData.learningProgress) {
+              setLearningProgress(userData.learningProgress);
+            } else {
+              setLearningProgress([
+                { id: 1, title: 'Market Basics', progress: 0, completed: false },
+                { id: 2, title: 'Technical Analysis', progress: 0, completed: false },
+                { id: 3, title: 'Risk Management', progress: 0, completed: false },
+              ]);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchUserData();
+  }, []);
 
-  // Portfolio data
-  const [portfolio, setPortfolio] = useState([
-    { symbol: 'RELIANCE', shares: 15, avgPrice: 2450, currentPrice: 2580 },
-    { symbol: 'TCS', shares: 8, avgPrice: 3250, currentPrice: 3415 },
-    { symbol: 'HDFCBANK', shares: 5, avgPrice: 1450, currentPrice: 1520 },
-    { symbol: 'INFY', shares: 12, avgPrice: 1420, currentPrice: 1485 },
-  ]);
+  // Fetch leaderboard data when period changes or leaderboard is shown
+  useEffect(() => {
+    if (showLeaderboard) {
+      fetchLeaderboardData();
+    }
+  }, [leaderboardPeriod, showLeaderboard]);
 
-  // Calculate portfolio totals
-  const portfolioValue = portfolio.reduce(
-    (total, stock) => total + stock.shares * stock.currentPrice,
-    0
-  );
-  const investedAmount = portfolio.reduce(
-    (total, stock) => total + stock.shares * stock.avgPrice,
-    0
-  );
-  const profitLoss = portfolioValue - investedAmount;
+  const fetchLeaderboardData = async () => {
+    if (!showLeaderboard) return;
+    
+    setLeaderboardLoading(true);
+    setLeaderboardError(null);
+    
+    try {
+      // Get all users
+      const usersRef = collection(db, 'users');
+      const usersSnapshot = await getDocs(usersRef);
+      
+      const usersData = [];
+      
+      // Process each user
+      for (const userDoc of usersSnapshot.docs) {
+        const userData = userDoc.data();
+        
+        // Initialize profit and investment totals
+        let totalProfit = 0;
+        let totalInvestment = 0;
+        
+        // Check if user has transactions
+        if (userData.transactions && Array.isArray(userData.transactions)) {
+          // Filter transactions by time period if needed
+          const now = new Date();
+          let cutoffDate = null;
+          
+          if (leaderboardPeriod === 'week') {
+            cutoffDate = new Date(now.setDate(now.getDate() - 7));
+          } else if (leaderboardPeriod === 'month') {
+            cutoffDate = new Date(now.setMonth(now.getMonth() - 1));
+          }
+          
+          // Calculate totals from transactions
+          userData.transactions.forEach(transaction => {
+            // Skip if transaction is outside our time filter
+            if (cutoffDate && transaction.date && 
+                transaction.date.toDate() < cutoffDate) {
+              return;
+            }
+            
+            if (transaction.type === 'sell' && transaction.profit) {
+              totalProfit += Number(transaction.profit);
+            }
+            if (transaction.type === 'buy') {
+              totalInvestment += Number(transaction.totalAmount);
+            }
+          });
+        }
+        
+        // Calculate return percentage
+        const returnPercentage = totalInvestment > 0 
+          ? ((totalProfit / totalInvestment) * 100).toFixed(2)
+          : '0.00';
+        
+        // Add portfolio value to investment (unrealized gains)
+        if (userData.portfolio && Array.isArray(userData.portfolio)) {
+          userData.portfolio.forEach(stock => {
+            if (stock.buyPrice && stock.quantity) {
+              totalInvestment += Number(stock.buyPrice) * Number(stock.quantity);
+            }
+          });
+        }
+        
+        usersData.push({
+          userId: userDoc.id,
+          name: userData.name || 'Anonymous Trader',
+          totalProfit,
+          totalInvestment,
+          returnPercentage
+        });
+      }
+      
+      // Sort by total profit (descending)
+      const sortedData = usersData.sort((a, b) => b.totalProfit - a.totalProfit);
+      
+      setLeaderboardData(sortedData);
+      
+    } catch (error) {
+      console.error('Error fetching leaderboard data:', error);
+      setLeaderboardError('Failed to load leaderboard data. Please try again.');
+    } finally {
+      setLeaderboardLoading(false);
+    }
+  };
+  if (loading) {
+    return <div className="profile-loading">Loading profile...</div>;
+  }
 
   return (
     <div className="profile-container">
-      <h1 className="profile-title">My Trading Profile</h1>
+      <h1 className="profile-title">My Profile</h1>
       
       {/* User Info Section */}
       <div className="profile-section user-info">
         <div className="user-avatar">{user.avatar}</div>
         <div className="user-details">
           <h2>{user.name}</h2>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Member Since:</strong> {user.joinDate}</p>
-          <p><strong>Trader Level:</strong> {user.level}</p>
-        </div>
-        <div className="virtual-balance">
-          <h3>Virtual Balance</h3>
-          <div className="balance-amount">
-            ₹{user.virtualBalance.toLocaleString()}
-          </div>
-          <div className={`profit-loss ${profitLoss >= 0 ? 'positive' : 'negative'}`}>
-            {profitLoss >= 0 ? '▲' : '▼'} ₹{Math.abs(profitLoss).toLocaleString()}
-          </div>
+          <p>Email: {user.email}</p>
+          <p>Joined: {user.joinDate}</p>
+          <p>Level: {user.level}</p>
         </div>
       </div>
-
-      {/* Learning Progress Section */}
+      
+      {/* Learning Progress */}
       <div className="profile-section learning-progress">
         <h2>📚 Learning Progress</h2>
-        <div className="progress-container">
-          {learningProgress.map((course) => (
-            <div key={course.id} className="progress-item">
-              <div className="progress-header">
-                <h3>{course.title}</h3>
-                <span>{course.progress}%</span>
-              </div>
+        <ul className="progress-list">
+          {learningProgress.map((item) => (
+            <li key={item.id} className={`progress-item ${item.completed ? 'completed' : ''}`}>
+              <span>{item.title}</span>
               <div className="progress-bar">
-                <div 
-                  className={`progress-fill ${course.completed ? 'completed' : ''}`}
-                  style={{ width: `${course.progress}%` }}
+                <div
+                  className="progress-fill"
+                  style={{ width: `${item.progress}%` }}
                 ></div>
               </div>
-              {course.completed && (
-                <div className="completion-badge">Completed!</div>
-              )}
-            </div>
+              <span>{item.progress}%</span>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
-
-      {/* Portfolio Section */}
-      <div className="profile-section portfolio">
-        <h2>📊 My Portfolio</h2>
-        <div className="portfolio-summary">
-          <div className="summary-card">
-            <h3>Total Value</h3>
-            <p>₹{portfolioValue.toLocaleString()}</p>
-          </div>
-          <div className="summary-card">
-            <h3>Invested</h3>
-            <p>₹{investedAmount.toLocaleString()}</p>
-          </div>
-          <div className={`summary-card ${profitLoss >= 0 ? 'positive' : 'negative'}`}>
-            <h3>P&L</h3>
-            <p>{profitLoss >= 0 ? '+' : ''}₹{Math.abs(profitLoss).toLocaleString()}</p>
-          </div>
-        </div>
-        
-        <div className="portfolio-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Stock</th>
-                <th>Shares</th>
-                <th>Avg Price</th>
-                <th>Current</th>
-                <th>Value</th>
-                <th>P&L</th>
-              </tr>
-            </thead>
-            <tbody>
-              {portfolio.map((stock) => {
-                const currentValue = stock.shares * stock.currentPrice;
-                const invested = stock.shares * stock.avgPrice;
-                const pl = currentValue - invested;
-                const plPercent = ((pl / invested) * 100).toFixed(2);
-                
-                return (
-                  <tr key={stock.symbol}>
-                    <td>{stock.symbol}</td>
-                    <td>{stock.shares}</td>
-                    <td>₹{stock.avgPrice}</td>
-                    <td>₹{stock.currentPrice}</td>
-                    <td>₹{currentValue.toLocaleString()}</td>
-                    <td className={pl >= 0 ? 'positive' : 'negative'}>
-                      {pl >= 0 ? '+' : ''}₹{Math.abs(pl)} ({plPercent}%)
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+      
+      {/* Toggle Leaderboard Button */}
+      <div className="profile-section">
+        <button
+          className="leaderboard-toggle-btn"
+          onClick={() => setShowLeaderboard(!showLeaderboard)}
+        >
+          {showLeaderboard ? 'Hide Leaderboard' : 'Show Leaderboard'}
+        </button>
       </div>
+      
+      {/* Integrated Leaderboard */}
+      {showLeaderboard && (
+        <div className="profile-section leaderboard-view">
+          <div className="leaderboard-container">
+            <h2>📊 Investor Leaderboard</h2>
+            
+            <div className="period-selector">
+              <button 
+                className={leaderboardPeriod === 'all' ? 'active' : ''} 
+                onClick={() => setLeaderboardPeriod('all')}
+              >
+                All Time
+              </button>
+              <button 
+                className={leaderboardPeriod === 'month' ? 'active' : ''} 
+                onClick={() => setLeaderboardPeriod('month')}
+              >
+                Last Month
+              </button>
+              <button 
+                className={leaderboardPeriod === 'week' ? 'active' : ''} 
+                onClick={() => setLeaderboardPeriod('week')}
+              >
+                Last Week
+              </button>
+            </div>
+            
+            {leaderboardLoading ? (
+              <div className="leaderboard-loading">
+                <div className="spinner"></div>
+                <p>Loading leaderboard data...</p>
+              </div>
+            ) : leaderboardError ? (
+              <div className="error-message">{leaderboardError}</div>
+            ) : (
+              <div className="leaderboard-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>Investor</th>
+                      <th>Total Profit</th>
+                      <th>Investment</th>
+                      <th>Return %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {leaderboardData.length > 0 ? (
+                      leaderboardData.map((userData, index) => (
+                        <tr key={userData.userId} className={index < 3 ? `top-${index + 1}` : ''}>
+                          <td className="rank-cell">
+                            <div className="rank-badge">{index + 1}</div>
+                          </td>
+                          <td className="user-cell">
+                            <div className="user-info">
+                              <span className="user-name">{userData.name}</span>
+                            </div>
+                          </td>
+                          <td className={`profit-cell ${userData.totalProfit >= 0 ? 'positive' : 'negative'}`}>
+                            ₹{userData.totalProfit.toLocaleString()}
+                          </td>
+                          <td className="investment-cell">
+                            ₹{userData.totalInvestment.toLocaleString()}
+                          </td>
+                          <td className={`percentage-cell ${parseFloat(userData.returnPercentage) >= 0 ? 'positive' : 'negative'}`}>
+                            {userData.returnPercentage}%
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" className="no-data">
+                          No users found or no trading activity in selected period
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+                <div className="leaderboard-note">
+                  <strong>Note:</strong> Rankings are based on total profit, with investment amount as tiebreaker.
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
