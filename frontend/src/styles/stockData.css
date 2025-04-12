@@ -1,0 +1,362 @@
+.stock-dashboard-kids {
+  padding: 2rem;
+  font-family: 'Comic Sans MS', sans-serif;
+  background: #f0f9ff;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stock-dashboard-kids h2 {
+  color: #0066cc;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* Filter Sections */
+.filter-section {
+  margin-bottom: 2rem;
+}
+
+.exchange-filter, .category-filter {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #e6f7ff;
+  border-radius: 15px;
+  border: 3px dashed #6ab7ff;
+}
+
+.exchange-filter p, .category-filter p {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #0066cc;
+}
+
+.exchange-buttons, .category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.exchange-button, .category-button {
+  padding: 0.5rem 1rem;
+  background: #fff;
+  border: 2px solid #6ab7ff;
+  border-radius: 10px;
+  font-family: 'Comic Sans MS', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.exchange-button:hover, .category-button:hover {
+  background: #d4edff;
+  transform: scale(1.05);
+}
+
+.exchange-button.active, .category-button.active {
+  background: #0066cc;
+  color: white;
+  border-color: #004999;
+}
+
+/* Stock Grid */
+.stock-grid-kids {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  justify-items: center;
+  grid-auto-rows: 1fr;
+}
+
+/* Stock Cards */
+.stock-card-kids {
+  position: relative;
+  background: #fff7e6;
+  border: 3px dashed #ffd700;
+  border-radius: 20px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.stock-card-kids:hover {
+  transform: scale(1.03);
+  background: #fffaeb;
+  box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+}
+
+.stock-category-badge {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  background: #ff6600;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.stock-card-kids h3 {
+  color: #ff6600;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+.stock-card-kids p {
+  font-size: 1rem;
+  margin: 0.4rem 0;
+  color: #333;
+  text-align: left;
+}
+
+/* Buy/Sell Actions */
+.stock-actions {
+  margin-top: 1rem;
+  border-top: 2px dashed #ffd700;
+  padding-top: 1rem;
+}
+
+.quantity-selector {
+  margin-bottom: 0.8rem;
+}
+
+.quantity-selector input {
+  width: 60px;
+  padding: 0.3rem;
+  font-family: 'Comic Sans MS', sans-serif;
+  border: 2px solid #ff6600;
+  border-radius: 8px;
+  text-align: center;
+  margin-left: 0.5rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.buy-button, .sell-button {
+  padding: 0.5rem 1.5rem;
+  font-family: 'Comic Sans MS', sans-serif;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: bold;
+}
+
+.buy-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.buy-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.sell-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.sell-button:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+}
+
+.action-message {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #fffacd;
+  border-radius: 10px;
+  border: 2px dashed #ffd700;
+  font-weight: bold;
+  animation: fadeIn 0.5s;
+}
+
+/* Loading and Load More */
+.loader {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading-animation {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.loading-bounce {
+  width: 20px;
+  height: 20px;
+  background-color: #ff6600;
+  border-radius: 50%;
+  animation: bounce 1.5s infinite ease-in-out both;
+}
+
+.loading-bounce:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-bounce:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+.load-more-button {
+  margin: 2rem auto;
+  padding: 0.8rem 2rem;
+  background: #ff9900;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-family: 'Comic Sans MS', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+.load-more-button:hover {
+  background: #ff8800;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.load-more-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.stock-count {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #666;
+}
+
+.no-stocks-message {
+  background: #ffeeee;
+  padding: 2rem;
+  border-radius: 15px;
+  border: 3px dashed #ff6666;
+  margin: 2rem 0;
+}
+
+.no-stocks-message h3 {
+  color: #cc0000;
+  margin-bottom: 0.5rem;
+}
+
+.price-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.current-price {
+  margin-bottom: 4px;
+}
+
+.price-change {
+  font-weight: bold;
+  margin-left: 25px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.price-up {
+  color: #76940a;
+  background-color: rgba(10, 148, 50, 0.1);
+}
+
+.price-down {
+  color: #e53935;
+  background-color: rgba(229, 57, 53, 0.1);
+}    
+
+/* Company Logo Styling */
+.stock-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.company-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: contain;
+  background-color: white;
+  padding: 3px;
+  margin-right: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 12px;
+  color: #666;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Update the stock card to accommodate the logo */
+.stock-card-kids {
+  padding-top: 15px;
+}
+
+.stock-header h3 {
+  margin: 0;
+  flex: 1;
+  
+}
+
+.stock-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: white;
+  padding: 3px;
+  margin-right: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 1px solid #e0e0e0;
+}
