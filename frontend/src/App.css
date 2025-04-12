@@ -1,38 +1,375 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Child-friendly App container */
+.app-container {
   display: flex;
-  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Comic Sans MS', 'Nunito', sans-serif; /* More child-friendly font */
+}
+
+/* Sidebar Styles with bright colors */
+.sidebar {
+  width: 350px;
+  background: linear-gradient(135deg, #4158D0, #C850C0); /* Colorful gradient background */
+  color: white;
+  transition: all 0.4s ease;
+  position: relative;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 0 15px 15px 0;
+}
+
+.sidebar.closed {
+  width: 70px;
+}
+
+.sidebar-header {
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px dashed #ffffff; /* Playful border */
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-toggle {
+  background: #FFD166; /* Bright yellow button */
+  border: none;
+  color: #333;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+  transform: rotate(360deg);
+  background: #FFBD00;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 3px solid #FFD166; /* Yellow border around avatar */
+  object-fit: cover;
+  background: #f5f5f5; /* Light background in case image fails to load */
+  transition: transform 0.3s ease;
+}
+
+.user-avatar:hover {
+  transform: scale(1.3);
+}
+
+/* Default avatar when no photo URL is available */
+.default-avatar {
+  width: 60px;
+  height: 45px;
+  border-radius: 50%;
+  border: 3px solid #FFD166;
+  background-color: #26FFDF;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.default-avatar:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 1rem;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.sidebar-menu li:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px);
+}
+
+.sidebar-menu li.active {
+  background: #FF9A8B; /* Peachy color for active tab */
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-menu li:nth-child(1) { background: rgba(255, 143, 143, 0.4); }
+.sidebar-menu li:nth-child(2) { background: rgba(255, 195, 113, 0.4); }
+.sidebar-menu li:nth-child(3) { background: rgba(146, 255, 163, 0.4); }
+.sidebar-menu li:nth-child(4) { background: rgba(128, 223, 255, 0.4); }
+.sidebar-menu li:nth-child(5) { background: rgba(186, 133, 255, 0.4); }
+.sidebar-menu li:nth-child(6) { background: rgba(255, 133, 192, 0.4); }
+.sidebar-menu li:nth-child(7) { background: rgba(255, 214, 102, 0.4); }
+
+.sidebar-menu li:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  z-index: -1;
+  transition: width 0.3s ease;
+}
+
+.sidebar-menu li:hover:before {
+  width: 100%;
+}
+
+/* Animated emoji */
+.sidebar-menu li {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-menu li span.emoji {
+  margin-right: 10px;
+  font-size: 1.4rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.sidebar-menu li:hover span.emoji {
+  transform: scale(1.2) rotate(10deg);
+}
+
+.logout-button-sidebar {
+  padding: 12px 0;
+  font-size: 16px;
   color: white;
+  background: linear-gradient(135deg, #FF9A8B, #FF6B95); /* Gradient logout button */
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-.App-link {
-  color: #61dafb;
+.logout-button-sidebar:hover {
+  background: linear-gradient(135deg, #FF6B95, #FF9A8B);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  padding: 1.5rem;
+  transition: margin-left 0.3s ease;
+  background-color: #f9f9f9;
+  border-radius: 15px 0 0 15px;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.main-content.full-width {
+  margin-left: -220px;
+}
+
+/* Loading animation */
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 24px;
+  color: #4158D0;
+  position: relative;
+}
+
+.loading-screen:after {
+  content: '...';
+  position: absolute;
+  animation: loadingDots 1.5s infinite;
+}
+
+@keyframes loadingDots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    z-index: 100;
+    height: 100%;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .sidebar.closed {
+    width: 0;
+    overflow: hidden;
   }
+  
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Profile Section Styles */
+.profile-section {
+  padding: 1rem;
+  border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 1rem;
+  border-radius: 12px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.8rem;
+  border-radius: 12px;
+  transition: background 0.3s;
+}
+
+.profile-header:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.profile-avatar {
+  width: 45px;
+  height: 45px;
+  background: #FFD166;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  border: 3px solid white;
+  transition: transform 0.3s ease;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.profile-name {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.profile-email {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  color: #fff;
+}
+
+.profile-arrow {
+  transition: transform 0.3s;
+  font-size: 1rem;
+  color: #FFD166;
+}
+
+.profile-arrow.open {
+  transform: rotate(180deg);
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(65, 88, 208, 0.95);
+  border-radius: 0 0 12px 12px;
+  z-index: 10;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin-top: 0.5rem;
+  animation: dropdownAppear 0.3s ease-out;
+}
+
+@keyframes dropdownAppear {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 1rem;
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown-divider {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 0.3rem 0;
+}
+
+.dropdown-item.logout {
+  color: #FF9A8B;
+}
+
+.dropdown-item.logout:hover {
+  background: rgba(255, 154, 139, 0.2);
 }

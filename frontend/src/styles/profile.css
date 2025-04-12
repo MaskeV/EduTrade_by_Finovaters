@@ -1,0 +1,218 @@
+/* Profile Container */
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .profile-title {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  /* Profile Sections */
+  .profile-section {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* User Info Section */
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .user-avatar {
+    font-size: 3.5rem;
+    width: 100px;
+    height: 100px;
+    background: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #3498db;
+  }
+  
+  .user-details {
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  .user-details h2 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  
+  .user-details p {
+    margin: 0.5rem 0;
+    color: #555;
+  }
+  
+  .virtual-balance {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    min-width: 200px;
+    text-align: center;
+  }
+  
+  .balance-amount {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #27ae60;
+    margin: 0.5rem 0;
+  }
+  
+  .profit-loss {
+    font-weight: bold;
+  }
+  
+  .profit-loss.positive {
+    color: #27ae60;
+  }
+  
+  .profit-loss.negative {
+    color: #e74c3c;
+  }
+  
+  /* Learning Progress Section */
+  .progress-container {
+    margin-top: 1.5rem;
+  }
+  
+  .progress-item {
+    margin-bottom: 1.5rem;
+  }
+  
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .progress-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  
+  .progress-bar {
+    height: 10px;
+    background: #ecf0f1;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: #3498db;
+    transition: width 0.5s ease;
+  }
+  
+  .progress-fill.completed {
+    background: #27ae60;
+  }
+  
+  .completion-badge {
+    background: #27ae60;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+  
+  /* Portfolio Section */
+  .portfolio-summary {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+  }
+  
+  .summary-card {
+    flex: 1;
+    min-width: 150px;
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .summary-card h3 {
+    margin-top: 0;
+    color: #555;
+    font-size: 1rem;
+  }
+  
+  .summary-card p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0.5rem 0 0;
+  }
+  
+  .summary-card.positive p {
+    color: #27ae60;
+  }
+  
+  .summary-card.negative p {
+    color: #e74c3c;
+  }
+  
+  /* Portfolio Table */
+  .portfolio-table {
+    overflow-x: auto;
+  }
+  
+  .portfolio-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .portfolio-table th,
+  .portfolio-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+  }
+  
+  .portfolio-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+  }
+  
+  .portfolio-table tr:hover {
+    background: #f8f9fa;
+  }
+  
+  .positive {
+    color: #27ae60;
+  }
+  
+  .negative {
+    color: #e74c3c;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .user-info {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .user-avatar {
+      margin: 0 auto;
+    }
+    
+    .portfolio-summary {
+      flex-direction: column;
+    }
+  }
