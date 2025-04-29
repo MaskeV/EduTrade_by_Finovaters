@@ -580,7 +580,7 @@ const StockData = () => {
         
         const responses = await Promise.allSettled(
           displayedStocks.map(stock =>
-            fetch(`http://localhost:3001/api/yfinance/${stock.symbol}`)
+            fetch(`http://localhost:3002/api/yfinance/${stock.symbol}`)
               .then(res => {
                 if (!res.ok) throw new Error(`Failed to fetch ${stock.symbol}`);
                 return res.json();
