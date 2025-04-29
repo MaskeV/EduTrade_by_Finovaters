@@ -18,7 +18,7 @@ const News = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/news');
+        const response = await axios.get('http://localhost:3002/api/news');
         
         // Filter and shorten descriptions
         const filtered = response.data
