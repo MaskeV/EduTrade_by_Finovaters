@@ -55,7 +55,7 @@ Copy code
 1. **Clone the repo**  
 ```bash
 git clone https://github.com/your-username/finplay-ai.git
-cd finplay-ai
+cd EduTrade
 Install dependencies
 
 bash
@@ -67,9 +67,9 @@ Create a .env file in both backend and frontend:
 
 env
 Copy code
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
 YAHOO_API_KEY=your_yahoo_finance_api_key
+REACT_GEMINI_API=gemini_api
+REACT_News_API=news_api
 Run the backend
 
 bash
@@ -82,26 +82,25 @@ bash
 Copy code
 cd frontend
 npm start
-📊 Future Scope
-🔗 Integration with UPI/payment sandbox for real money simulation.
 
-🏦 Partnerships with schools & edtech platforms.
 
-🤖 Advanced AI features for risk prediction & trading mentorship.
-
-🌍 Multilingual support for global users.
-
-📜 License
-This project is licensed under the MIT License.
-
-👨‍💻 Contributors
-Your Name – Idea & Development
-
-Contributions welcome! Open a PR or create an issue.
-
-yaml
-Copy code
+```
 
 ---
 
-👉 Do you want me to also design a **fancy README with badges, logo, and banner image** (like profession
+## 📊 Future Scope  
+- 🔗 Integration with **UPI/payment sandbox**.  
+- 🏦 Partnerships with **schools & edtech platforms**.  
+- 🤖 AI features for **risk prediction & mentorship**.  
+- 🌍 Multilingual support.  
+
+---
+
+## 📜 License  
+This project is licensed under the **MIT License**.  
+
+---
+
+## 👨‍💻 Contributors  
+- **Your Name** – Idea & Development  
+- Contributions welcome! Open a PR or create an issue.  
