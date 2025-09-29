@@ -38,12 +38,6 @@ The platform offers **real-time stock simulations, imaginary credit scoring, and
 
 ---
 
-## 📂 Project Structure  
-
-EduTrade/
-│── frontend/ # React.js + React Native code
-│── backend/ # Node.js + FireBase APIs
-│── README.md # Project overview
 
 yaml
 Copy code
@@ -75,7 +69,8 @@ Run the backend
 bash
 Copy code
 cd backend
-npm start
+node index.js
+node news.js 
 Run the frontend
 
 bash
