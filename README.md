@@ -91,11 +91,3 @@ npm start
 
 ---
 
-## 📜 License  
-This project is licensed under the **MIT License**.  
-
----
-
-## 👨‍💻 Contributors  
-- **Your Name** – Idea & Development  
-- Contributions welcome! Open a PR or create an issue.  
